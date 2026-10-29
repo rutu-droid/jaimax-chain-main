@@ -1,0 +1,71 @@
+syntax = "proto3";
+package authority.v1;
+
+import "cosmos/msg/v1/msg.proto";
+import "cosmos_proto/cosmos.proto";
+import "gogoproto/gogo.proto";
+import "amino/amino.proto";
+import "google/protobuf/any.proto";  // ADD THIS LINE
+
+option go_package = "example.com/chain/x/authority/types";
+
+// Msg defines the authority Msg service.
+service Msg {
+  option (cosmos.msg.v1.service) = true;
+  
+  // AddValidator adds a new validator to the PoA network
+  rpc AddValidator(MsgAddValidator) returns (MsgAddValidatorResponse);
+  
+  // SetValidatorPower updates a validator's power
+  rpc SetValidatorPower(MsgSetValidatorPower) returns (MsgSetValidatorPowerResponse);
+  
+  // RemoveValidator removes a validator from the network
+  rpc RemoveValidator(MsgRemoveValidator) returns (MsgRemoveValidatorResponse);
+  
+  // UpdateAuthorityAccounts updates the list of authority accounts
+  rpc UpdateAuthorityAccounts(MsgUpdateAuthorityAccounts) returns (MsgUpdateAuthorityAccountsResponse);
+}
+
+message MsgAddValidator {
+  option (cosmos.msg.v1.signer) = "admin";
+  option (amino.name) = "authority/MsgAddValidator";
+  
+  string admin = 1 [(cosmos_proto.scalar) = "cosmos.AddressString"];
+  string validator_address = 2 [(cosmos_proto.scalar) = "cosmos.ValidatorAddressString"];
+  google.protobuf.Any pub_key = 3 [(cosmos_proto.accepts_interface) = "cosmos.crypto.PubKey"]; // CHANGE THIS LINE
+  string moniker = 4;
+  int64 power = 5;
+}
+
+message MsgAddValidatorResponse {}
+
+message MsgSetValidatorPower {
+  option (cosmos.msg.v1.signer) = "admin";
+  option (amino.name) = "authority/MsgSetValidatorPower";
+  
+  string admin = 1 [(cosmos_proto.scalar) = "cosmos.AddressString"];
+  string validator_address = 2 [(cosmos_proto.scalar) = "cosmos.ValidatorAddressString"];
+  int64 power = 3;
+}
+
+message MsgSetValidatorPowerResponse {}
+
+message MsgRemoveValidator {
+  option (cosmos.msg.v1.signer) = "admin";
+  option (amino.name) = "authority/MsgRemoveValidator";
+  
+  string admin = 1 [(cosmos_proto.scalar) = "cosmos.AddressString"];
+  string validator_address = 2 [(cosmos_proto.scalar) = "cosmos.ValidatorAddressString"];
+}
+
+message MsgRemoveValidatorResponse {}
+
+message MsgUpdateAuthorityAccounts {
+  option (cosmos.msg.v1.signer) = "admin";
+  option (amino.name) = "authority/MsgUpdateAuthorityAccounts";
+  
+  string admin = 1 [(cosmos_proto.scalar) = "cosmos.AddressString"];
+  repeated string new_authority_accounts = 2;
+}
+
+message MsgUpdateAuthorityAccountsResponse {}

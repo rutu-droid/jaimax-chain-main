@@ -1,0 +1,44 @@
+### ===== Go / Cosmos =====
+# Compiled binaries
+appd
+jaimaxd
+build/
+*.exe
+*.out
+
+# Go build cache
+/bin/
+/pkg/
+
+### ===== Node runtime data =====
+data/
+.data/
+*.db
+
+# Cosmos home directories
+.appd/
+.*d/
+
+# Validator / node secrets
+*priv_validator_key.json
+*node_key.json
+*.mnemonic
+*.seed
+*.pem
+
+### ===== Transactions / signatures =====
+signed.json
+unsigned.json
+
+### ===== Blockscout (runtime only) =====
+blockscout/**/logs/
+blockscout/**/data/
+blockscout/**/db/
+
+### ===== IDE / OS =====
+.vscode/
+.idea/
+.DS_Store
+
+check-validator-security.sh
+verify-p2p-hidden-validator.sh

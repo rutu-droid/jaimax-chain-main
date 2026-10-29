@@ -1,0 +1,17 @@
+syntax = "proto3";
+package authority.v1;
+
+import "gogoproto/gogo.proto";
+import "amino/amino.proto";
+
+option go_package = "example.com/chain/x/authority/types";
+
+// GenesisState defines the authority module's genesis state.
+message GenesisState {
+  Params params = 1 [(gogoproto.nullable) = false, (amino.dont_omitempty) = true];
+}
+
+// Params defines the parameters for the authority module.
+message Params {
+  repeated string authority_accounts = 1;
+}

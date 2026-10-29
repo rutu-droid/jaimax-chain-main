@@ -1,0 +1,17 @@
+syntax = "proto3";
+
+package authority.module.v1;
+
+import "cosmos/app/v1alpha1/module.proto";
+
+option go_package = "example.com/chain/x/authority/module/v1;modulev1";
+
+// Module is the config object for the authority module.
+message Module {
+  option (cosmos.app.v1alpha1.module) = {
+    go_import: "example.com/chain/x/authority"
+  };
+
+  // authority defines the custom module authority. If not set, defaults to the governance module.
+  string authority = 1;
+}

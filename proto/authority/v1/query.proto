@@ -1,0 +1,23 @@
+syntax = "proto3";
+package authority.v1;
+
+import "gogoproto/gogo.proto";
+import "google/api/annotations.proto";
+import "cosmos/base/query/v1beta1/pagination.proto";
+import "authority/v1/genesis.proto";
+
+option go_package = "example.com/chain/x/authority/types";
+
+// Query defines the gRPC querier service.
+service Query {
+  // Params queries the parameters of the authority module.
+  rpc Params(QueryParamsRequest) returns (QueryParamsResponse) {
+    option (google.api.http).get = "/authority/v1/params";
+  }
+}
+
+message QueryParamsRequest {}
+
+message QueryParamsResponse {
+  Params params = 1 [(gogoproto.nullable) = false];
+}
